@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using nzworks.api.data;
 
@@ -11,9 +12,10 @@ using nzworks.api.data;
 namespace nzworks.api.Migrations
 {
     [DbContext(typeof(NZWalkssDbContext))]
-    partial class NZWalkssDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220702161054_adding-users")]
+    partial class addingusers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

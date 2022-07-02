@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using nzworks.api.Models.Domain;
 using nzworks.api.Models.DTO;
@@ -7,7 +8,7 @@ using nzworks.api.Repositories;
 namespace nzworks.api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]")]   
     public class RegionsController : Controller
     {
         private readonly IRegionRepository regionRepository;
@@ -19,6 +20,7 @@ namespace nzworks.api.Controllers
             this.mapper = mapper;
         }
         [HttpGet]
+        [Authorize(Roles = "reader")]
         public async Task<IActionResult> GetAllRegionsAsync()
         {
             /*var regions = new List<Region>()
@@ -71,6 +73,7 @@ namespace nzworks.api.Controllers
         [HttpGet]
         [Route("{id:guid}")]
         [ActionName("GetRegionAsync")]
+        [Authorize(Roles = "reader")]
         public async Task<IActionResult> GetRegionAsync(Guid id)
         {
             var region = await regionRepository.GetAsync(id);
@@ -83,6 +86,7 @@ namespace nzworks.api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "writer")]
         public async Task<IActionResult> AddRegionAync(AddRegionRequest addRegionRequest)
         {
             //if(!ValidateAddReginAsync(addRegionRequest))
@@ -115,6 +119,7 @@ namespace nzworks.api.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
+        [Authorize(Roles = "writer")]
         public async Task<IActionResult> DeleteRegionAsync(Guid id)
         {
             //Get Region from databse
@@ -145,6 +150,7 @@ namespace nzworks.api.Controllers
 
         [HttpPut]
         [Route("{id:guid}")]
+        [Authorize(Roles = "writer")]
         public async Task<IActionResult> UpdateRegionAsync([FromRoute] Guid id, [FromBody] UpdateRegionRequest updateRegionRequest)
         {
             //if (!ValidateUpdateRegionAsync(updateRegionRequest))

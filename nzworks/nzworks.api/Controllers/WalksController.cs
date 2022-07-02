@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using nzworks.api.Models.Domain;
 using nzworks.api.Models.DTO;
@@ -33,6 +34,7 @@ namespace nzworks.api.Controllers
         [HttpGet]
         [Route("{id:guid}")]
         [ActionName("GetAync")]
+        [Authorize(Roles = "reader")]
         public async Task<IActionResult> GetAync(Guid id)
         {
             var walk = await this.walksRepository.GetAsync(id);
@@ -43,6 +45,7 @@ namespace nzworks.api.Controllers
             return Ok(mapper.Map<Models.DTO.Walk>(walk));
         }
         [HttpPost]
+        [Authorize(Roles = "writer")]
         public async Task<IActionResult> AddAsync([FromBody] AddWalkRequest addWalkRequest)
         {
             if (!(await ValidateAddWalkAsync(addWalkRequest)))
@@ -64,6 +67,7 @@ namespace nzworks.api.Controllers
 
         [HttpPut]
         [Route("{id:guid}")]
+        [Authorize(Roles = "writer")]
         public async Task<IActionResult> UpdateWalkAsync([FromRoute] Guid id, [FromBody] UpdateWalkRequest updateWalkRequest)
         {
             if(!(await ValidateUpdateWalkAsync(updateWalkRequest)))
@@ -90,6 +94,7 @@ namespace nzworks.api.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
+        [Authorize(Roles = "writer")]
         public async Task<IActionResult> RemoveWalkAsync(Guid id)
         {
             var walkDomain = await this.walksRepository.DeleteAsync(id);

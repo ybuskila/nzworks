@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using nzworks.api.Models.DTO;
 using nzworks.api.Repositories;
@@ -29,6 +30,7 @@ namespace nzworks.api.Controllers
         [HttpGet]
         [Route("{id:guid}")]
         [ActionName("GetAsync")]
+        [Authorize(Roles = "reader")]
         public async Task<IActionResult> GetAsync(Guid id)
         {
             var wdDomain = await walkDificultyRepository.GetAsync(id);
@@ -40,6 +42,7 @@ namespace nzworks.api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "writer")]
         public async Task<IActionResult> AddSync(AddWalkDificultyRequest addWalkDificultyRequest)
         {
             //if (!ValidateAddSync(addWalkDificultyRequest))
@@ -57,6 +60,7 @@ namespace nzworks.api.Controllers
 
         [HttpPut]
         [Route("{id:guid}")]
+        [Authorize(Roles = "writer")]
         public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateWalkDifficultyRequest updateWalkDifficultyRequest)
         {
             //if (!ValidateUpdateAsync(updateWalkDifficultyRequest))
@@ -80,6 +84,7 @@ namespace nzworks.api.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
+        [Authorize(Roles = "writer")]
         public async Task<IActionResult> DeleteAsync([FromRoute] Guid id)
         {
             var wdDomain = await this.walkDificultyRepository.DeleteAsync(id);
