@@ -42,6 +42,10 @@ namespace nzworks.api.Controllers
         [HttpPost]
         public async Task<IActionResult> AddSync(AddWalkDificultyRequest addWalkDificultyRequest)
         {
+            if (!ValidateAddSync(addWalkDificultyRequest))
+            {
+                return BadRequest(ModelState);
+            }
             var walkDFDomain = new Models.Domain.WalkDifficulty()
             {
                 Code = addWalkDificultyRequest.Code
@@ -55,6 +59,10 @@ namespace nzworks.api.Controllers
         [Route("{id:guid}")]
         public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateWalkDifficultyRequest updateWalkDifficultyRequest)
         {
+            if (!ValidateUpdateAsync(updateWalkDifficultyRequest))
+            {
+                return BadRequest(ModelState);
+            }
             var wdDomain = new Models.Domain.WalkDifficulty()
             {
                 Code = updateWalkDifficultyRequest.Code
@@ -83,5 +91,45 @@ namespace nzworks.api.Controllers
 
             return Ok(wdDomain);
         }
+
+        #region private methods
+        private bool ValidateAddSync(AddWalkDificultyRequest addWalkDificultyRequest)
+        {
+            if(addWalkDificultyRequest == null)
+            {
+                ModelState.AddModelError(nameof(addWalkDificultyRequest), $"{nameof(addWalkDificultyRequest)} is required");
+                return false;
+            }
+            if (string.IsNullOrEmpty(addWalkDificultyRequest.Code))
+            {
+                ModelState.AddModelError(nameof(addWalkDificultyRequest.Code), $"{nameof(addWalkDificultyRequest.Code)} cannot be null or empty or white space");
+            }
+
+            if(ModelState.ErrorCount > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool ValidateUpdateAsync(UpdateWalkDifficultyRequest updateWalkDifficultyRequest)
+        {
+            if (updateWalkDifficultyRequest == null)
+            {
+                ModelState.AddModelError(nameof(updateWalkDifficultyRequest), $"{nameof(updateWalkDifficultyRequest)} is required");
+                return false;
+            }
+            if (string.IsNullOrEmpty(updateWalkDifficultyRequest.Code))
+            {
+                ModelState.AddModelError(nameof(updateWalkDifficultyRequest.Code), $"{nameof(updateWalkDifficultyRequest.Code)} cannot be null or empty or white space");
+            }
+
+            if (ModelState.ErrorCount > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+        #endregion
     }
 }
