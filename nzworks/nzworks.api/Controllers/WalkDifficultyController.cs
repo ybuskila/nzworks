@@ -42,10 +42,10 @@ namespace nzworks.api.Controllers
         [HttpPost]
         public async Task<IActionResult> AddSync(AddWalkDificultyRequest addWalkDificultyRequest)
         {
-            if (!ValidateAddSync(addWalkDificultyRequest))
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ValidateAddSync(addWalkDificultyRequest))
+            //{
+            //    return BadRequest(ModelState);
+            //}
             var walkDFDomain = new Models.Domain.WalkDifficulty()
             {
                 Code = addWalkDificultyRequest.Code
@@ -59,10 +59,10 @@ namespace nzworks.api.Controllers
         [Route("{id:guid}")]
         public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateWalkDifficultyRequest updateWalkDifficultyRequest)
         {
-            if (!ValidateUpdateAsync(updateWalkDifficultyRequest))
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ValidateUpdateAsync(updateWalkDifficultyRequest))
+            //{
+            //    return BadRequest(ModelState);
+            //}
             var wdDomain = new Models.Domain.WalkDifficulty()
             {
                 Code = updateWalkDifficultyRequest.Code

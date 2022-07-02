@@ -85,8 +85,8 @@ namespace nzworks.api.Controllers
         [HttpPost]
         public async Task<IActionResult> AddRegionAync(AddRegionRequest addRegionRequest)
         {
-            if(!ValidateAddReginAsync(addRegionRequest))
-                return BadRequest(ModelState);
+            //if(!ValidateAddReginAsync(addRegionRequest))
+            //    return BadRequest(ModelState);
 
             //Request to domain model
             var region = new Models.Domain.Region()
@@ -147,10 +147,10 @@ namespace nzworks.api.Controllers
         [Route("{id:guid}")]
         public async Task<IActionResult> UpdateRegionAsync([FromRoute] Guid id, [FromBody] UpdateRegionRequest updateRegionRequest)
         {
-            if (!ValidateUpdateRegionAsync(updateRegionRequest))
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ValidateUpdateRegionAsync(updateRegionRequest))
+            //{
+            //    return BadRequest(ModelState);
+            //}
             //Convert DTO to Domain Model
             Models.Domain.Region region = new Models.Domain.Region() { 
                 Id = id,
